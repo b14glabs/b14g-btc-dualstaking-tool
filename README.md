@@ -1,43 +1,29 @@
 # Readme
 
-This repository contains TypeScript/JavaScript samples to compose the `stake` and `redeem` transactions on Bitcoin network. The targeted readers should have knowledge on Bitcoin transaction formats and are familiar with TS/JS programming languages. 
+This repository contains TypeScript/JavaScript samples to compose the `create` order in b14g Marketplace and `redeem` transactions on Bitcoin network. The targeted readers should have knowledge on Bitcoin transaction formats and are familiar with TS/JS programming languages.
 
 Quick link to technical design (draft version): https://famous-exoplanet-701.notion.site/BTC-Staking-Transaction-Design-v2-bfa311f7f19e45688a944fb9c1e32c59. 
 
-For those who want a more user friendly interface, please test it out on https://stake.dev.btcs.network.
-
-## Test Environment
-
-Please test the function on Core Devnet which links to BTC Testnet. 
-
-Core Devnet faucet https://scan.dev.btcs.network/faucet.
-
-Notes:
-
-- It is recommended to lock BTC for more than 8 hours in Devnet, because only staking transaction longer than 6 hours (lock timestamp - BTC tx confirmation time with 4 blocks) are counted as as feasible.
-
+For those who want a more user friendly interface, please test it out on https://app.b14g.xyz.
 
 ## How to
-
-### Program by yourself
-
-If you want to write your own scripts to enable BTC staking on Core, please take the [sample](sample.ts) as a reference.
 
 ### Run the script directly
 
 If you want to use the tool directly, please run `npm install` and scripts below. For more information about the parameters, please check the [index](index.ts) file.
 
-`stake BTC` 
+`Create Order`
 
 ``` shell
-node dist/index.js stake --account tb1qzdvhlak7y8kz0v5hu2tw7qae3969jzrt7rj7n5 --privatekey ${private key} --amount 1000000 --bitcoinnetwork 2 --corenetwork 2 --locktime 1712847585 --rewardaddress 0x2a5F963BaC7bf136f6a0ff98356b52F0B49Af71A --validatoraddress  0x3aE030Dc3717C66f63D6e8f1d1508a5C941ff46D
+node dist/index.js stake --account tb1qzdvhlak7y8kz0v5hu2tw7qae3969jzrt7rj7n5 --privatekey {btcprivatekey} --amount 1000000 --bitcoinnetwork 1 --corenetwork 1 --locktime 1712847585  --validatoraddress  0x3aE030Dc3717C66f63D6e8f1d1508a5C941ff46D --coreprivatekey {corePrivateKey} --rewardportion  50000000
 ```
 
-If successful, you will see the console returns transaction id, the locked P2SH/P2WSH script address and the redeem script, which will be used on the following redeem transaction. Please save them properly. 
+If successful, you will see the console returns order address, transaction id, the locked P2SH/P2WSH script address and the redeem script, which will be used on the following redeem transaction. Please save them properly. 
 
 Example
 
 ``` shell
+Order address: 0xeB77A1fd9B26409eCcfc5fb22D658a759dEcd4D5
 txId: 7b531ab17b93114bb5b74e6b14e5ff99f447f139544099f166a98517b423a7c9
 address: 2N7LJiG1ZGk97jUuhDcsRquPjgxFjT273fi
 redeemScript: 04e1fa1766b17576a91413597ff6de21ec27b297e296ef03b9897459086b88ac
@@ -52,8 +38,7 @@ node dist/index.js redeem --account 2N7LJiG1ZGk97jUuhDcsRquPjgxFjT273fi --redeem
 
 `claim CORE rewards`
 
-Please visit https://stake.dev.btcs.network, connect to the site using the reward address (0x2a5F963BaC7bf136f6a0ff98356b52F0B49Af71A in the sample) and you can see the BTC staking transaction and claim rewards once system distributes in each round. 
-
+Please visit https://app.b14g.xyz/my-portfolio, connect to the site using the address from corePrivateKey and you can see the new orders and claim rewards once system distributes in each round.
 
 ## Disclaimer
 ### Warning: This software is provided as-is for educational and testing purposes only. It is not intended for use in production environments. By using this software, you agree to assume all risks associated with its use. The authors, contributors, and maintainers are not responsible for any damage, data loss, or legal liability that may result from the use or misuse of this software.

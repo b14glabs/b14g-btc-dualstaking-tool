@@ -3,6 +3,7 @@
 import * as commander from "commander";
 import { stake } from "./src/stake";
 import { redeem } from "./src/redeem";
+import { createOrder } from "./src/createOrder";
 import { BitcoinNetworkMap, CoreNetworkMap, FeeSpeedMap } from "./src/constant";
 
 const program = new commander.Command();
@@ -45,8 +46,12 @@ program
     "The public key used to redeem the BTC assets when locktime expires. Default to the public key associated with --privatekey."
   )
   .requiredOption(
-    "-raddr, --rewardaddress <rewardaddress>",
-    "Core address used to claim staking rewards."
+    "-corePriKey, --coreprivatekey <coreprivateKey>",
+   "Core private key used to create orders and receive rewards in b14g marketplace"
+  )
+  .requiredOption(
+   "-rePortion, --rewardportion <rewardportion>",
+     "Reward sharing percent for BTC stakers (decimal = 6). e.g 50000000 = 50%"
   )
   .requiredOption(
     "-vaddr, --validatoraddress <validatoraddress>",
@@ -62,15 +67,21 @@ program
     "Transaction fee s)slow a)average f)fast, please choose in (s, a ,f) OR a customized number in SAT, default to a)average."
   )
   .action(async (args) => {
+    if(args.bitcoinnetwork != 1){
+        throw new Error("We only support BTC mainnet network")
+    }
+    if(args.corenetwork != 1){
+        throw new Error("We only support Core mainnet network")
+    }
     const bitcoinnetwork = BitcoinNetworkMap[args.bitcoinnetwork];
     const corenetwork = CoreNetworkMap[args.corenetwork];
     const fee = FeeSpeedMap[args.fee];
-
+    const rewardAddress = await createOrder(args.rewardportion, args.coreprivatekey)
     await stake({
       lockTime: args.locktime,
       amount: args.amount,
       validatorAddress: args.validatoraddress,
-      rewardAddress: args.rewardaddress,
+      rewardAddress: rewardAddress,
       publicKey: args.publickey,
       account: args.account,
       bitcoinNetwork: bitcoinnetwork,
