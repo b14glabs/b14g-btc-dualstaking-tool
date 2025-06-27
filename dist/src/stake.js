@@ -16,7 +16,7 @@ exports.stake = void 0;
 const constant_1 = require("./constant");
 const transaction_1 = require("./transaction");
 const bignumber_js_1 = __importDefault(require("bignumber.js"));
-const stake = (_a) => __awaiter(void 0, [_a], void 0, function* ({ witness = false, lockTime, account, amount, validatorAddress, rewardAddress, privateKey, publicKey, coreNetwork = "mainnet", bitcoinNetwork = "mainnet", bitcoinRpc = "mempool", fee = "avg", }) {
+const stake = ({ witness = false, lockTime, account, amount, validatorAddress, rewardAddress, privateKey, publicKey, coreNetwork = "mainnet", bitcoinNetwork = "mainnet", bitcoinRpc = "mempool", fee = "avg", }) => __awaiter(void 0, void 0, void 0, function* () {
     if (!lockTime) {
         throw new Error("LockTime should not be empty");
     }

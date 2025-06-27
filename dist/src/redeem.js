@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.redeem = void 0;
 const transaction_1 = require("./transaction");
-const redeem = (_a) => __awaiter(void 0, [_a], void 0, function* ({ account, redeemScript, privateKey, destAddress, bitcoinRpc = "mempool", fee = "avg", }) {
+const redeem = ({ account, redeemScript, privateKey, destAddress, bitcoinRpc = "mempool", fee = "avg", }) => __awaiter(void 0, void 0, void 0, function* () {
     if (!account) {
         throw new Error("account should not be empty");
     }

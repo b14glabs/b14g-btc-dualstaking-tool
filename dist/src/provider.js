@@ -104,8 +104,8 @@ class Provider {
         });
     }
     broadcast(hex) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            var _a;
             try {
                 const response = yield axios_1.default.post(`${this.apiUrl}/tx`, hex, {
                     headers: {

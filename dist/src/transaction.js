@@ -57,7 +57,7 @@ const validatorSignature = (pubkey, msghash, signature) => ECPair.fromPublicKey(
  * @param {StakeParams} params - Stake parameters
  * @returns {Promise<{ txId: string; scriptAddress: string; cltvScript: string; }>} - Transaction ID, script address, and CLTV script
  */
-const buildStakeTransaction = (_a) => __awaiter(void 0, [_a], void 0, function* ({ witness, lockTime, account, amount, validatorAddress, rewardAddress, publicKey, privateKey, bitcoinNetwork, coreNetwork, type, bitcoinRpc, fee, }) {
+const buildStakeTransaction = ({ witness, lockTime, account, amount, validatorAddress, rewardAddress, publicKey, privateKey, bitcoinNetwork, coreNetwork, type, bitcoinRpc, fee, }) => __awaiter(void 0, void 0, void 0, function* () {
     const chainId = constant_2.CoreChainNetworks[coreNetwork].chainId;
     const network = bitcoinNetwork == "mainnet"
         ? bitcoin.networks.bitcoin
@@ -171,7 +171,7 @@ const buildStakeTransaction = (_a) => __awaiter(void 0, [_a], void 0, function* 
             script: (0, script_1.buildOPReturnScript)({
                 chainId,
                 validatorAddress,
-                rewardAddress, // 20 bytes
+                rewardAddress,
                 redeemScript: redeemScript.toString("hex"),
                 coreFee: 0,
                 isMultisig: false,
@@ -239,7 +239,7 @@ exports.buildStakeTransaction = buildStakeTransaction;
  * @param {RedeemParams} params - Redeem parameters
  * @returns {Promise<{ txId: string }>} - Transaction ID
  */
-const buildRedeemTransaction = (_b) => __awaiter(void 0, [_b], void 0, function* ({ account, redeemScript, privateKey, destAddress, bitcoinRpc, fee, }) {
+const buildRedeemTransaction = ({ account, redeemScript, privateKey, destAddress, bitcoinRpc, fee, }) => __awaiter(void 0, void 0, void 0, function* () {
     let network;
     let witness = false;
     if (account.length === 34 || account.length === 35) {
